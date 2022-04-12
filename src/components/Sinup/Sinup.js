@@ -1,12 +1,40 @@
 import React, { useState } from 'react';
 import { Form } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+
+
+import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import './Sinup.css'
+import auth from '../../firebase.in';
+
 
 const Sinup = () => {
     const [email, setEmail] = useState('');
     const [password , setPassword] = useState('');
+
+
    
+
+    // sigupu with google 
+const HendleGoogleSingup =() => {
+
+    const provider = new GoogleAuthProvider();
+
+    signInWithPopup(auth, provider)
+      .then((result) => {
+
+      
+        const user = result.user;
+        console.log(user)
+        // ...
+      }).catch((error) => {
+   
+        console.log(error);
+        
+        // ...
+      });
+    }
+
    
     const hendaleEmail = event => {
         const Email = event.target.value;
@@ -47,7 +75,7 @@ const Sinup = () => {
         </Form.Group>
        
         <div className='mx-auto btn-box'>
-            <button className='mb-3 btn-google '>Continue with Google </button>
+            <button onClick={HendleGoogleSingup} className='mb-3 btn-google '>Continue with Google </button>
       
         </div>
         <p className='mb-2 from-link'>
